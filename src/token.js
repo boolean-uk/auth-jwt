@@ -5,8 +5,8 @@ const jwt = require("jsonwebtoken");
  *
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
  */
-function createToken() {
-  let token = jwt.sign({ foo: "bar" }, "shhhhh");
+function createToken(payload, secret) {
+  let token = jwt.sign(payload, secret);
   return token;
 }
 
@@ -15,26 +15,30 @@ function createToken() {
  *
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#token-expiration-exp-claim
  */
-function createTokenWithExpiry() {
+function createTokenWithExpiry(payload, secret, expiry) {
   let token = jwt.sign(
-    {
-      data: { foo: "bar" },
-    },
-    "shhhhh",
-    { expiresIn: "1h" }
+    payload,
+    secret,
+    { expiresIn: expiry }
   );
   return token;
 }
+
 
 /**
  * Implement this function to accept a JWT and a secret key. Return the decoded token (the payload) if verification is successful, and false if it fails
  *
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
  */
-function verifyToken(token) {
-    let decoded = jwt.verify(token, 'shhhhh');
-    if (decoded) {
+
+function verifyToken(token, secret) {
+   
+
+    try {
+        let decoded = jwt.verify(token, secret);
         return decoded
+    } catch (error) {
+        return false;
     }
 }
 

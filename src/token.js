@@ -15,7 +15,10 @@ const createToken = (payload, secret) => {
  *
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#token-expiration-exp-claim
  */
-function createTokenWithExpiry() {}
+function createTokenWithExpiry(payload, secret, expiry) {
+  const token = jwt.sign(payload, secret, { expiresIn: expiry })
+  return token
+}
 
 /**
  * Implement this function to accept a JWT and a secret key. Return the decoded token (the payload) if verification is successful, and false if it fails

@@ -15,7 +15,7 @@ const createToken = (payload, secret) => {
  *
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#token-expiration-exp-claim
  */
-function createTokenWithExpiry(payload, secret, expiry) {
+const createTokenWithExpiry = (payload, secret, expiry) => {
   const token = jwt.sign(payload, secret, { expiresIn: expiry })
   return token
 }
@@ -25,7 +25,14 @@ function createTokenWithExpiry(payload, secret, expiry) {
  *
  * Documentation: https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback
  */
-function verifyToken() {}
+const verifyToken = (token, secret) => {
+  try {
+    const decoded = jwt.verify(token, secret)
+    return decoded
+  } catch (error) {
+    return false
+  }
+}
 
 module.exports = {
   createToken,
